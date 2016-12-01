@@ -212,7 +212,7 @@ top_build_prefix =
 top_builddir = .
 top_srcdir = .
 AUTOMAKE_OPTIONS = foreign
-SUBDIRS = ml_hash ml_string
+SUBDIRS = ml_hash ml_string ml_hashmap ml_dictionary ml_log ml_standard
 all: all-recursive
 
 .SUFFIXES:

@@ -119,4 +119,22 @@ int ml_str_cat(ml_str_ctx *sa_dest, ml_str_ctx *sa_src);
  */
 void ml_str_free(ml_str_ctx *sa);
 
+
+// ------ Strandard ------
+/**
+ * ml_str_trim
+ * Strip whitespace (or other characters) from the beginning and end of a string
+ *
+ * @str         The string that will be trimmed.
+ * @what        indicates which chars are to be trimmed. NULL->default (' \t\n\r\v\0')
+ * @mode        mode 1: trim left
+ *              mode 2 : trim right
+ *              mode 3 : trim left and right
+ * @out         The trimmed string
+ * @out_size    the size of trimmed string  
+ *
+ * @return  0:succ  1:fail
+ */
+int ml_str_trim(char *str, char *what, size_t what_len, int mode, char *out, size_t out_size);
+
 #endif

@@ -86,4 +86,19 @@ int ml_crc32(char *in_data, size_t in_data_len, char *out_data, size_t out_data_
 int ml_crc32_file(char *file_name, char *out_data, size_t out_data_size);
 
 
+
+// Base64
+/*
+ * encode/decode the base64 hash of a string
+ * @str             The input string.
+ * @length          Length of string
+ *
+ * @return          NULL:fail   other:succ
+ *
+ * @notice          need free the result
+ */
+char *ml_base64_encode(const unsigned char *str, size_t length);
+char *ml_base64_decode(const unsigned char *str, size_t length);
+
+
 #endif

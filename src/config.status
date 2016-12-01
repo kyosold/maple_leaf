@@ -322,7 +322,7 @@ on `(hostname || uname -n) 2>/dev/null | sed 1q`
 "
 
 # Files that config.status was made for.
-config_files=" Makefile ml_string/Makefile ml_hash/Makefile"
+config_files=" Makefile ml_string/Makefile ml_hash/Makefile ml_hashmap/Makefile ml_dictionary/Makefile ml_log/Makefile ml_standard/Makefile"
 config_commands=" depfiles libtool"
 
 ac_cs_usage="\
@@ -565,7 +565,7 @@ finish_cmds='PATH="\$PATH:/sbin" ldconfig -n $libdir'
 finish_eval=''
 hardcode_into_libs='yes'
 sys_lib_search_path_spec='/usr/lib/gcc/x86_64-redhat-linux/4.4.7 /usr/lib64 /lib64'
-sys_lib_dlsearch_path_spec='/lib64 /usr/lib64 /lib /usr/lib /usr/lib64/atlas /usr/lib64/ctapi /usr/lib64 /usr/local/lib /usr/local/lib64/mysql /usr/local/lib64 /usr/local/libgs/lib64/libgs/base64 /usr/local/libgs/lib64/libgs/confparser /usr/local/libgs/lib64/libgs/ctlog /usr/local/libgs/lib64/libgs/dictionary /usr/local/libgs/lib64/libgs/hashmap /usr/local/libgs/lib64/libgs/mfile /usr/local/libgs/lib64/libgs/stralloc /usr/local/libgs/lib64/libgs/utf8str /usr/local/libgs/lib64/libgs/ctcrypt /usr/local/libgs/lib64/libgs/cthash /usr/lib64/mysql /usr/lib64/qt-3.3/lib /usr/lib/vmware-tools/lib32/libvmGuestLib.so /usr/lib/vmware-tools/lib64/libvmGuestLib.so /usr/lib/vmware-tools/lib32/libvmGuestLibJava.so /usr/lib/vmware-tools/lib64/libvmGuestLibJava.so /usr/lib/vmware-tools/lib32/libDeployPkg.so /usr/lib/vmware-tools/lib64/libDeployPkg.so /usr/lib64/xulrunner '
+sys_lib_dlsearch_path_spec='/lib64 /usr/lib64 /lib /usr/lib /usr/lib64/atlas /usr/lib64/ctapi /usr/lib64 /usr/local/lib /usr/local/lib64/mysql /usr/local/lib64 /usr/local/libgs/lib64/libgs/base64 /usr/local/libgs/lib64/libgs/confparser /usr/local/libgs/lib64/libgs/ctlog /usr/local/libgs/lib64/libgs/dictionary /usr/local/libgs/lib64/libgs/hashmap /usr/local/libgs/lib64/libgs/mfile /usr/local/libgs/lib64/libgs/stralloc /usr/local/libgs/lib64/libgs/utf8str /usr/local/libgs/lib64/libgs/ctcrypt /usr/local/libgs/lib64/libgs/cthash /usr/local/maple_leaf/lib64/maple_leaf/ml_hash/ /usr/local/maple_leaf/lib64/maple_leaf/ml_string/ /usr/local/maple_leaf/lib64/maple_leaf/ml_hashmap /usr/local/maple_leaf/lib64/maple_leaf/ml_dictionary /usr/local/maple_leaf/lib64/maple_leaf/ml_log /usr/lib64/mysql /usr/lib64/qt-3.3/lib /usr/lib/vmware-tools/lib32/libvmGuestLib.so /usr/lib/vmware-tools/lib64/libvmGuestLib.so /usr/lib/vmware-tools/lib32/libvmGuestLibJava.so /usr/lib/vmware-tools/lib64/libvmGuestLibJava.so /usr/lib/vmware-tools/lib32/libDeployPkg.so /usr/lib/vmware-tools/lib64/libDeployPkg.so /usr/lib64/xulrunner '
 hardcode_action='immediate'
 enable_dlopen='unknown'
 enable_dlopen_self='unknown'
@@ -637,6 +637,10 @@ do
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "ml_string/Makefile") CONFIG_FILES="$CONFIG_FILES ml_string/Makefile" ;;
     "ml_hash/Makefile") CONFIG_FILES="$CONFIG_FILES ml_hash/Makefile" ;;
+    "ml_hashmap/Makefile") CONFIG_FILES="$CONFIG_FILES ml_hashmap/Makefile" ;;
+    "ml_dictionary/Makefile") CONFIG_FILES="$CONFIG_FILES ml_dictionary/Makefile" ;;
+    "ml_log/Makefile") CONFIG_FILES="$CONFIG_FILES ml_log/Makefile" ;;
+    "ml_standard/Makefile") CONFIG_FILES="$CONFIG_FILES ml_standard/Makefile" ;;
 
   *) { { $as_echo "$as_me:$LINENO: error: invalid argument: $ac_config_target" >&5
 $as_echo "$as_me: error: invalid argument: $ac_config_target" >&2;}

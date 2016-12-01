@@ -11899,7 +11899,7 @@ fi
 done
 
 
-ac_config_files="$ac_config_files Makefile ml_string/Makefile ml_hash/Makefile"
+ac_config_files="$ac_config_files Makefile ml_string/Makefile ml_hash/Makefile ml_hashmap/Makefile ml_dictionary/Makefile ml_log/Makefile ml_standard/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -12803,6 +12803,10 @@ do
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "ml_string/Makefile") CONFIG_FILES="$CONFIG_FILES ml_string/Makefile" ;;
     "ml_hash/Makefile") CONFIG_FILES="$CONFIG_FILES ml_hash/Makefile" ;;
+    "ml_hashmap/Makefile") CONFIG_FILES="$CONFIG_FILES ml_hashmap/Makefile" ;;
+    "ml_dictionary/Makefile") CONFIG_FILES="$CONFIG_FILES ml_dictionary/Makefile" ;;
+    "ml_log/Makefile") CONFIG_FILES="$CONFIG_FILES ml_log/Makefile" ;;
+    "ml_standard/Makefile") CONFIG_FILES="$CONFIG_FILES ml_standard/Makefile" ;;
 
   *) { { $as_echo "$as_me:$LINENO: error: invalid argument: $ac_config_target" >&5
 $as_echo "$as_me: error: invalid argument: $ac_config_target" >&2;}

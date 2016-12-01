@@ -259,3 +259,173 @@ void ml_str_free(ml_str_ctx *sa)
     }
 }
 
+
+// ------ Standard ------
+/* {{{ php_charmask
+ * Fills a 256-byte bytemask with input. You can specify a range like 'a..z',
+ * it needs to be incrementing.
+ * Returns: FAILURE/SUCCESS whether the input was correct (i.e. no range errors)
+ */
+static inline int ml_charmask(unsigned char *input, size_t len, char *mask)
+{
+    unsigned char *end;
+    unsigned char c;
+    int result = 0;
+
+    memset(mask, 0, 256);
+    for (end = input+len; input < end; input++) {
+        c=*input;
+        if ((input+3 < end) && input[1] == '.' && input[2] == '.'
+                && input[3] >= c) {
+            memset(mask+c, 1, input[3] - c + 1);
+            input+=3;
+        } else if ((input+1 < end) && input[0] == '.' && input[1] == '.') {
+            /* Error, try to be as helpful as possible:
+               (a range ending/starting with '.' won't be captured here) */
+            if (end-len >= input) { /* there was no 'left' char */
+                printf("Invalid '..'-range, no character to the left of '..'");
+                result = 1;
+                continue;
+            }
+            if (input+2 >= end) { /* there is no 'right' char */
+                printf("Invalid '..'-range, no character to the right of '..'");
+                result = 1;
+                continue;
+            }
+            if (input[-1] > input[2]) { /* wrong order */
+                printf("Invalid '..'-range, '..'-range needs to be incrementing");
+                result = 1;
+                continue;
+            }
+            /* FIXME: better error (a..b..c is the only left possibility?) */
+            printf("Invalid '..'-range");
+            result = 1;
+            continue;
+        } else {
+            mask[c]=1;
+        }
+    }
+    return result;
+}
+/* }}} */
+
+
+
+/**
+ * ml_str_trim
+ * Strip whitespace (or other characters) from the beginning and end of a string
+ *
+ * @str         The string that will be trimmed.
+ * @what        indicates which chars are to be trimmed. NULL->default (' \t\n\r\v\0')
+ * @mode        mode 1: trim left
+ *              mode 2 : trim right
+ *              mode 3 : trim left and right
+ * @out         The trimmed string
+ * @out_size    the size of trimmed string  
+ *
+ * @return  0:succ  1:fail
+ */
+int ml_str_trim(char *str, char *what, size_t what_len, int mode, char *out, size_t out_size)
+{
+    const char *c   = str;
+    size_t len      = strlen(str);
+    register size_t i;
+    size_t trimmed  = 0;
+    char mask[256];
+
+    if (what) {
+        if (what_len == 1) {
+            char p = *what;
+            if (mode & 1) { 
+                for (i = 0; i < len; i++) {
+                    if (c[i] == p) { 
+                        trimmed++;
+                    } else {
+                        break;
+                    }    
+                }    
+                len -= trimmed;
+                c += trimmed;
+            }
+            if (mode & 2) { 
+                if (len > 0) { 
+                    i = len - 1; 
+                    do { 
+                        if (c[i] == p) { 
+                            len--;
+                        } else {
+                            break;
+                        }    
+                    } while (i-- != 0);
+                }    
+            }
+        } else {
+            ml_charmask((unsigned char*)what, what_len, mask);
+
+            if (mode & 1) {
+                for (i = 0; i < len; i++) {
+                    if (mask[(unsigned char)c[i]]) {
+                        trimmed++;
+                    } else {
+                        break;
+                    }
+                }
+                len -= trimmed;
+                c += trimmed;
+            }
+            if (mode & 2) {
+                if (len > 0) {
+                    i = len - 1;
+                    do {
+                        if (mask[(unsigned char)c[i]]) {
+                            len--;
+                        } else {
+                            break;
+                        }
+                    } while (i-- != 0);
+                }
+            }
+        }
+    } else {
+        if (mode & 1) { 
+            for (i = 0; i < len; i++) {
+                if ((unsigned char)c[i] <= ' ' &&
+                    (c[i] == ' ' || c[i] == '\n' || c[i] == '\r' || c[i] == '\t' || c[i] == '\v' || c[i] == '\0')) {        
+                    trimmed++;
+                } else {
+                    break;
+                }   
+            }   
+            len -= trimmed;
+            c += trimmed;
+        }
+        if (mode & 2) {
+            if (len > 0) {
+                i = len - 1;
+                do {
+                    if ((unsigned char)c[i] <= ' ' &&
+                        (c[i] == ' ' || c[i] == '\n' || c[i] == '\r' || c[i] == '\t' || c[i] == '\v' || c[i] == '\0')) {
+                        len--;
+                    } else {
+                        break;
+                    }
+                } while (i-- != 0);
+            }
+        }
+    }
+
+    if (out_size < (len + 1)) {
+        return 1;
+    }
+
+    if (strlen(str) == len) {
+        memcpy(out, str, len);
+        out[len] = '\0';
+    } else {
+        memcpy(out, c, len);
+        out[len] = '\0';
+    }
+
+    return 0;
+}
+

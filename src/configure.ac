@@ -34,4 +34,8 @@ AC_OUTPUT([
     Makefile
     ml_string/Makefile
     ml_hash/Makefile
+    ml_hashmap/Makefile
+    ml_dictionary/Makefile
+    ml_log/Makefile
+    ml_standard/Makefile
         ])

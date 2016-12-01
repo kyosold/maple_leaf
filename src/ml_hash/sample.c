@@ -58,6 +58,7 @@ int main(int argc, char **argv)
             ret = ml_crc32(str, strlen(str), crc32str, sizeof(crc32str));
         }
         printf("%s hash:%s %s\n", alog, crc32str, (ret == 1) ? "fail" : "succ");
+
     }
 
     return 0;
