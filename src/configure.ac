@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.63])
-AC_INIT([maple_leaf], [1.0], [kyosold@qq.com])
+AC_INIT([maple_leaf], [2.0], [kyosold@qq.com])
 
 AM_INIT_AUTOMAKE([foreign -Wall -Werror])
 
@@ -38,4 +38,5 @@ AC_OUTPUT([
     ml_dictionary/Makefile
     ml_log/Makefile
     ml_standard/Makefile
+    ml_mfile/Makefile
         ])
