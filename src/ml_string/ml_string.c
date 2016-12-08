@@ -429,3 +429,134 @@ int ml_str_trim(char *str, char *what, size_t what_len, int mode, char *out, siz
     return 0;
 }
 
+
+// ------ UTF8 string family ------
+static unsigned int ml_utf8_check(const char c)
+{
+    if ( (c&0x80) == 0 ) {  /* ascii */
+        return 1;
+    } else if ( (c&0xe0) == 0xc0 ) {
+        return 2;
+    } else if ( (c&0xf0) == 0xe0 ) {
+        return 3;
+    } else if ( (c&0xf8) == 0xf0 ) {
+        return 4;
+    } else if ( (c&0xfc) == 0xf8 ) {
+        return 5;
+    } else if ( (c&0xfe) == 0xfc ) {
+        return 6;
+    } else {
+        return 0;
+    }
+}
+
+/**
+ * ml_utf8_strlen
+ * Get string length
+ *
+ * @str         The string that will be get length.
+ *
+ * @return  0:fail  1:length of the string
+ */
+unsigned int ml_utf8_strlen(const char *str)
+{
+    if ( NULL == str ) {
+        return 0;
+    }
+
+    unsigned int ulen = 0;
+    unsigned int slen = strlen(str);
+
+    unsigned int i;
+    unsigned int tmp;
+    for ( i=0; i<slen; /* NULL */ ) {
+        tmp = ml_utf8_check( str[i] );
+        if ( tmp > 0 && (i+=tmp) <= slen ) {
+            ++ulen;
+        } else {
+            break;
+        }
+    }
+
+    return ulen;
+}
+
+
+/**
+ * ml_utf8_strncpy
+ * copies the string pointed to by src, including the '\r', '\n', '\t', 
+ * to the buffer pointed to by dest and at most n bytes of src are copied
+ *
+ * @return  a pointer to the destination string dest
+ */
+char *ml_utf8_strncpy(char *dest, const char *src, unsigned int max)
+{
+    if ( NULL == dest || NULL == src || 0 == max ) {
+        return dest;
+    }
+
+    unsigned int slen = strlen(src);
+
+    char *p = dest;
+    unsigned int flag = 1;
+    unsigned int tmp;
+    unsigned int i;
+    unsigned int n; 
+    for ( i=0,n=0; i<slen && n<max; /* NULL */ ) {
+        if ( src[i] == '\r' || src[i] == '\n' || src[i] == '\t' ) {
+            ++i;
+            continue;
+        }
+
+        if ( src[i] == ' ' ) {
+            if ( flag == 0 ) {
+                *p++ = src[i];
+                n++;
+                flag = 1;
+            }
+            ++i;
+            continue;
+        }
+
+        tmp = ml_utf8_check( src[i] );
+        if ( tmp > 0 && (i+tmp) <= slen ) {
+            memcpy( p, src+i, tmp );
+            p += tmp;
+            i += tmp;
+            n++;
+            flag = 0;
+        } else {
+            break;
+        }
+    }
+
+    *p = '\0';
+
+    return dest;
+}
+
+
+/**
+ * ml_utf8_ltrim
+ * Strip whitespace (or other characters) from the beginning of a string
+ *
+ * @return  point to a new string, which Strip whitespace from the begining of a string 
+ */
+char *ml_utf8_ltrim( char *str )
+{
+    char utf8_space[] = { -29, -128, -128, 0 }; /* chinese_space, :) */
+
+    while ( *str ) {
+        if ( ' ' == *str ) {
+            str += 1;
+        } else if ( 0 == strncmp(str, utf8_space, 3) ) {
+            str += 3;
+        } else {
+            break;
+        }
+    }
+
+    return str;
+}
+
+

@@ -35,7 +35,7 @@ static const short base64_reverse_table[256] = {
 /* }}} */
 
 
-char *ml_base64_encode(const unsigned char *str, size_t length)
+char *ml_base64_encode_alloc(const unsigned char *str, size_t length)
 {
     const unsigned char *current = str;
     unsigned char *p;
@@ -156,7 +156,7 @@ char *ml_base64_decode_ex(const unsigned char *str, size_t length, int strict)
 }
 
 
-char *ml_base64_decode(const unsigned char *str, size_t length)
+char *ml_base64_decode_alloc(const unsigned char *str, size_t length)
 {
     return ml_base64_decode_ex(str, length, 0);
 }

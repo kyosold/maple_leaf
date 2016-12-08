@@ -137,4 +137,33 @@ void ml_str_free(ml_str_ctx *sa);
  */
 int ml_str_trim(char *str, char *what, size_t what_len, int mode, char *out, size_t out_size);
 
+
+// ------ UTF8 String Family ------
+/**
+ * ml_utf8_strlen
+ * Get string length
+ *
+ * @str     The string that will be get length.
+ *
+ * @return  0:fail  1:length of the string
+ */
+unsigned int ml_utf8_strlen(const char *str);
+
+/**
+ * ml_utf8_strncpy
+ * copies the string pointed to by src, including the '\r', '\n', '\t', 
+ * to the buffer pointed to by dest and at most n bytes of src are copied
+ *
+ * @return  a pointer to the destination string dest
+ */
+char *ml_utf8_strncpy(char *dest, const char *src, unsigned int max);
+
+/**
+ * ml_utf8_ltrim
+ * Strip whitespace (or other characters) from the beginning of a string
+ *
+ * @return  point to a new string, which Strip whitespace from the begining of a string 
+ */
+char *ml_utf8_ltrim( char *str );
+
 #endif

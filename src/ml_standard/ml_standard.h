@@ -12,7 +12,7 @@
  * @return  The encoded data, as a string or NULL on failure
  * @notice  You must free the encoded data after at finished.
  */
-char *ml_base64_encode(const unsigned char *str, size_t length);
+char *ml_base64_encode_alloc(const unsigned char *str, size_t length);
 
 /**
  * ml_base64_decode
@@ -24,7 +24,7 @@ char *ml_base64_encode(const unsigned char *str, size_t length);
  * @return  Returns the original data or NULL on failure. The returned data may be binary.
  * @notice  You must free the encoded data after at finished.
  */
-char *ml_base64_decode(const unsigned char *str, size_t length);
+char *ml_base64_decode_alloc(const unsigned char *str, size_t length);
 
 
 /**

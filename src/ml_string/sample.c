@@ -32,6 +32,19 @@ int main(int argc, char **argv)
     ml_str_free(&str2);
     ml_str_free(&str3);
 
+    // test utf8 family
+    printf("\nCheck [ml_utf8...]\n");
+    char *in = "hello, 你好,谢谢";
+    unsigned int n = 9;
+    char out[20] = {0};
+    char *p_dest = NULL;
+
+    p_dest = ml_utf8_strncpy(out, ml_utf8_ltrim(in), n);
+    if (*p_dest != '\0' && *out != '\0') {
+        printf("in: [%d]%s\n", ml_utf8_strlen(in), in);
+        printf("out:[%d]%s\n", ml_utf8_strlen(out), out);
+    }
+
 
     return 0;
 }
