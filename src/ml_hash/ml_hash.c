@@ -374,3 +374,136 @@ int ml_crc32_file(char *file_name, char *out_data, size_t out_data_size)
 
 
 
+// A Simple Hash
+unsigned int ml_simple_hash(char *str)
+{
+    register unsigned int hash;
+    register unsigned char *p; 
+
+    for (hash = 0, p = (unsigned char *)str; *p; p++) {
+        hash = 31 * hash + *p; 
+    }   
+
+    return (hash & 0x7FFFFFFF);
+}
+
+// SDBM Hash
+unsigned int ml_sdbm_hash(char *str)
+{
+    unsigned int hash = 0;
+
+    while (*str) {
+        // equivalent to: hash = 65599*hash + (*str++);
+        hash = (*str++) + (hash << 6) + (hash << 16) - hash;
+    }
+
+    return (hash & 0x7FFFFFFF);
+}
+
+// RS Hash
+unsigned int ml_rs_hash(char *str)
+{
+    unsigned int b = 378551;
+    unsigned int a = 63689;
+    unsigned int hash = 0;
+
+    while (*str) {
+        hash = hash * a + (*str++);
+        a *= b;
+    }
+
+    return (hash & 0x7FFFFFFF);
+}
+
+// JS Hash
+unsigned int ml_js_hash(char *str)
+{
+    unsigned int hash = 1315423911;
+
+    while (*str) {
+        hash ^= ((hash << 5) + (*str++) + (hash >> 2));
+    }
+
+    return (hash & 0x7FFFFFFF);
+}
+
+// P. J. Weinberger Hash
+unsigned int ml_pjw_hash(char *str)
+{
+    unsigned int bits_in_unsigned_int   = (unsigned int)(sizeof(unsigned int) * 8);
+    unsigned int three_quarters         = (unsigned int)((bits_in_unsigned_int * 3) / 4);
+    unsigned int one_eighth             = (unsigned int)(three_quarters / 8);
+    unsigned int high_bits              = (unsigned int)(0xFFFFFFFF) << (bits_in_unsigned_int - one_eighth);
+    unsigned int hash                   = 0;
+    unsigned int test                   = 0;
+
+    while (*str) {
+        hash = (hash << one_eighth) + (*str++);
+        if ((test = hash & high_bits) != 0) {
+            hash = ((hash ^ (test >> three_quarters)) & (~high_bits));
+        }
+    }
+
+    return (hash & 0x7FFFFFFF);
+}
+
+// ELF Hash
+unsigned int ml_elf_hash(char *str)
+{
+    unsigned int hash = 0;
+    unsigned int x    = 0;
+
+    while (*str) {
+        hash = (hash << 4) + (*str++);
+        if ((x = hash & 0xF0000000L) != 0) {
+            hash ^= (x >> 24);
+            hash &= ~x;
+        }
+    }
+
+    return (hash & 0x7FFFFFFF);
+}
+
+// BKDR Hash
+unsigned int ml_bkdr_hash(char *str)
+{
+    unsigned int seed = 131; // 31 131 1313 13131 131313 etc..
+    unsigned int hash = 0;
+
+    while (*str) {
+        hash = hash * seed + (*str++);
+    }
+
+    return (hash & 0x7FFFFFFF);
+}
+
+// DJB Hash
+unsigned int ml_djb_hash(char *str)
+{
+    unsigned int hash = 5381;
+
+    while (*str) {
+        hash += (hash << 5) + (*str++);
+    }
+
+    return (hash & 0x7FFFFFFF);
+}
+
+// AP Hash
+unsigned int ml_ap_hash(char *str)
+{
+    unsigned int hash = 0;
+    int i;
+
+    for (i=0; *str; i++) {
+        if ((i & 1) == 0) {
+            hash ^= ((hash << 7) ^ (*str++) ^ (hash >> 3));
+        } else {
+            hash ^= (~((hash << 11) ^ (*str++) ^ (hash >> 5)));
+        }
+    }
+
+    return (hash & 0x7FFFFFFF);
+}
+
+

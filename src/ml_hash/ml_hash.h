@@ -101,4 +101,26 @@ char *ml_base64_encode(const unsigned char *str, size_t length);
 char *ml_base64_decode(const unsigned char *str, size_t length);
 
 
+
+
+// A Simple Hash
+unsigned int ml_simple_hash(char *str);
+// SDBM Hash
+unsigned int ml_sdbm_hash(char *str);
+// RS Hash
+unsigned int ml_rs_hash(char *str);
+// JS Hash
+unsigned int ml_js_hash(char *str);
+// P. J. Weinberger Hash
+unsigned int ml_pjw_hash(char *str);
+// ELF Hash
+unsigned int ml_elf_hash(char *str);
+// BKDR Hash
+unsigned int ml_bkdr_hash(char *str);
+// DJB Hash
+unsigned int ml_djb_hash(char *str);
+// AP Hash
+unsigned int ml_ap_hash(char *str);
+
+
 #endif

@@ -63,7 +63,8 @@ AM_RECURSIVE_TARGETS = $(RECURSIVE_TARGETS:-recursive=) \
 	distdir dist dist-all distcheck
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = $(SUBDIRS)
+DIST_SUBDIRS = ml_hash ml_string ml_hashmap ml_dictionary ml_log \
+	ml_standard ml_mfile ml_api_mc
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -212,7 +213,10 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = foreign
-SUBDIRS = ml_hash ml_string ml_hashmap ml_dictionary ml_log ml_standard ml_mfile
+
+# 是否编译: ml_api_mc
+@BUILD_ml_api_mc_TRUE@USE_MC = ml_api_mc
+SUBDIRS = ml_hash ml_string ml_hashmap ml_dictionary ml_log ml_standard ml_mfile $(USE_MC)
 all: all-recursive
 
 .SUFFIXES:

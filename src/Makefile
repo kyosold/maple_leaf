@@ -63,7 +63,8 @@ AM_RECURSIVE_TARGETS = $(RECURSIVE_TARGETS:-recursive=) \
 	distdir dist dist-all distcheck
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = $(SUBDIRS)
+DIST_SUBDIRS = ml_hash ml_string ml_hashmap ml_dictionary ml_log \
+	ml_standard ml_mfile ml_api_mc
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -113,7 +114,7 @@ CFLAGS = -g -O2
 CPP = gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
-DEFS = -DPACKAGE_NAME=\"maple_leaf\" -DPACKAGE_TARNAME=\"maple_leaf\" -DPACKAGE_VERSION=\"2.0\" -DPACKAGE_STRING=\"maple_leaf\ 2.0\" -DPACKAGE_BUGREPORT=\"kyosold@qq.com\" -DPACKAGE=\"maple_leaf\" -DVERSION=\"2.0\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DHAVE_FCNTL_H=1 -DHAVE_STDINT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_UNISTD_H=1 -DHAVE_STDLIB_H=1 -DHAVE_MALLOC=1 -DHAVE_MEMSET=1 -DHAVE_STRCASECMP=1
+DEFS = -DPACKAGE_NAME=\"maple_leaf\" -DPACKAGE_TARNAME=\"maple_leaf\" -DPACKAGE_VERSION=\"2.1\" -DPACKAGE_STRING=\"maple_leaf\ 2.1\" -DPACKAGE_BUGREPORT=\"kyosold@qq.com\" -DPACKAGE=\"maple_leaf\" -DVERSION=\"2.1\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DHAVE_FCNTL_H=1 -DHAVE_STDINT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_UNISTD_H=1 -DHAVE_STDLIB_H=1 -DHAVE_MALLOC=1 -DHAVE_MEMSET=1 -DHAVE_STRCASECMP=1
 DEPDIR = .deps
 DSYMUTIL = 
 DUMPBIN = 
@@ -149,16 +150,16 @@ PACKAGE = maple_leaf
 PACKAGENAME = maple_leaf
 PACKAGE_BUGREPORT = kyosold@qq.com
 PACKAGE_NAME = maple_leaf
-PACKAGE_STRING = maple_leaf 2.0
+PACKAGE_STRING = maple_leaf 2.1
 PACKAGE_TARNAME = maple_leaf
-PACKAGE_VERSION = 2.0
+PACKAGE_VERSION = 2.1
 PATH_SEPARATOR = :
 RANLIB = ranlib
 SED = /bin/sed
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = strip
-VERSION = 2.0
+VERSION = 2.1
 abs_builddir = /home/grayson/dev/git/maple_leaf/src
 abs_srcdir = /home/grayson/dev/git/maple_leaf/src
 abs_top_builddir = /home/grayson/dev/git/maple_leaf/src
@@ -212,7 +213,10 @@ top_build_prefix =
 top_builddir = .
 top_srcdir = .
 AUTOMAKE_OPTIONS = foreign
-SUBDIRS = ml_hash ml_string ml_hashmap ml_dictionary ml_log ml_standard ml_mfile
+
+# 是否编译: ml_api_mc
+#USE_MC = ml_api_mc
+SUBDIRS = ml_hash ml_string ml_hashmap ml_dictionary ml_log ml_standard ml_mfile $(USE_MC)
 all: all-recursive
 
 .SUFFIXES:
